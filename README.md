@@ -1,7 +1,7 @@
 
-# Django Project
+# Wordnalyst Project
 
-This is a simple Django project.
+This is a simple Django projec.
 
 ## Prerequisites
 
