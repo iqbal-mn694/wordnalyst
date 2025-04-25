@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analisis Popularitas Hari Bumi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-white min-h-screen text-gray-800">
+  <div class="max-w-4xl mx-auto p-6">
+    <header class="text-center mb-10">
+      <h1 class="text-4xl font-bold text-green-700 mb-2 flex justify-center items-center gap-2">
+        🌍 Analisis Popularitas Hari Bumi
+      </h1>
+      <p class="text-sm text-gray-600">Berdasarkan data Google Trends terkini</p>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+      <div class="bg-white rounded-xl shadow p-5">
+        <h2 class="font-semibold text-lg text-green-600 mb-2">🕒 Rentang Waktu Data</h2>
+        <p><strong>Dari:</strong> <span id="start-time">{{ start_time }}</span></p>
+        <p><strong>Sampai:</strong> <span id="end-time">{{ end_time }}</span></p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <h2 class="font-semibold text-lg text-green-600 mb-2">📈 Nilai Tertinggi</h2>
+        <p><strong>Nilai:</strong> <span id="max-value">{{ max_value }}</span></p>
+        <p><strong>Waktu:</strong> <span id="max-time">{{ max_time }}</span></p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <h2 class="font-semibold text-lg text-green-600 mb-2">📊 Regresi Linear</h2>
+        <p><strong>Persamaan:</strong> <code class="bg-gray-100 p-1 rounded text-sm" id="equation">{{ equation }}</code></p>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <h2 class="font-semibold text-lg text-green-600 mb-2">📅 Prediksi</h2>
+        <p><strong>Sekarang:</strong> <span id="last-pred">{{ last_pred }}</span></p>
+        <p><strong>24 Jam Lagi:</strong> <span id="future-pred">{{ future_pred }}</span></p>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-xl font-semibold text-center mb-4 text-green-700">📉 Grafik Popularitas</h2>
+      <div class="overflow-hidden rounded-xl shadow">
+        <img src="/static/images/analisis_hari_bumi_simple.png" alt="Grafik Popularitas Hari Bumi" class="w-full h-auto">
+      </div>
+    </section>
+
+    <section class="bg-white p-6 rounded-xl shadow mb-10">
+      <h2 class="text-lg font-semibold text-green-600 mb-4">🔮 Prediksi Popularitas Berdasarkan Input</h2>
+      <form action="/analisis/" method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div>
+          <label for="datetime" class="block mb-1 font-medium">Masukkan Tanggal & Waktu:</label>
+          <input
+            type="text"
+            id="datetime"
+            name="datetime"
+            placeholder="Contoh: 2025-04-22 14:00"
+            class="w-full px-4 py-2 border rounded-md"
+            required
+          >
+        </div>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md">Prediksi</button>
+      </form>
+
+      {% if error %}
+      <p class="mt-4 text-red-500">{{ error }}</p>
+      {% endif %}
+    </section>
+  </div>
+</body>
+</html>
