@@ -6,12 +6,15 @@ import matplotlib
 matplotlib.use('Agg')  # Use a non-GUI backend for matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import locale
 from scipy.interpolate import BarycentricInterpolator
 from sklearn.linear_model import LinearRegression
 from datetime import datetime, timedelta
 import matplotlib.dates as mdates
 import pytz
 import os
+
+locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
 
 # Timezone Asia/Jakarta
 TIMEZONE = pytz.timezone('Asia/Jakarta')
@@ -51,7 +54,7 @@ def tampilkan_grafik_regresi(df, x_reg, y_reg, future_x, future_y, pred_time, pr
     reg_dates = [start_time + timedelta(hours=h) for h in x_reg]
     future_dates = [start_time + timedelta(hours=h) for h in future_x]
 
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(10, 6))
     plt.plot(df['waktu'], df['nilai'], 'o-', label='Data Asli', markersize=3)
     plt.plot(reg_dates, y_reg, '-', label='Regresi Linear')
     plt.plot(future_dates, future_y, '--', label='Prediksi Regresi')
@@ -107,10 +110,11 @@ def analisis_view(request):
 
     # Handling form submission for user input
     if request.method == 'POST':
-        user_input = request.POST.get('datetime')
+        selected_date = request.POST.get('datetime')
         try:
-            naive_datetime = datetime.strptime(user_input, '%Y-%m-%d %H:%M')
+            naive_datetime = datetime.strptime(selected_date, '%Y-%m-%dT%H:%M')
             tanggal_input = TIMEZONE.localize(naive_datetime)
+            # print("Input tanggal: " + tanggal_input.strftime("%A, %d %B %Y"))
 
             min_date = df['waktu'].min()
             max_date = df['waktu'].max()
@@ -135,6 +139,10 @@ def analisis_view(request):
                 'equation': f"y = {linear_model.coef_[0]:.4f}x + {linear_model.intercept_:.4f}",
                 'last_pred': linear_model.predict([[df_numeric['time_numeric'].max()]])[0],
                 'future_pred': linear_model.predict([[df_numeric['time_numeric'].max() + 24]])[0],
+                'scroll_to_graph': True,
+                'selected_date': selected_date,
+                'prediction_score': round(nilai_prediksi, 2),
+                'locale_time': tanggal_input.strftime("%A  tanggal %d %B %Y - %H:%M"),
             })
         except ValueError as e:
             return JsonResponse({"error": "Input tidak valid."}, status=400)
