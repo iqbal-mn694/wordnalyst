@@ -2,70 +2,183 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Analisis Popularitas Hari Bumi</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Popularitas Kata Gaul Anak Muda</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-white min-h-screen text-gray-800">
-  <div class="max-w-4xl mx-auto p-6">
-    <header class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-green-700 mb-2 flex justify-center items-center gap-2">
-        🌍 Analisis Popularitas Hari Bumi
-      </h1>
-      <p class="text-sm text-gray-600">Berdasarkan data Google Trends terkini</p>
-    </header>
+<body class="bg-gradient-to-br from-pink-200 via-blue-100 to-yellow-100 min-h-screen flex flex-col justify-between">
 
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-      <div class="bg-white rounded-xl shadow p-5">
-        <h2 class="font-semibold text-lg text-green-600 mb-2">🕒 Rentang Waktu Data</h2>
-        <p><strong>Dari:</strong> <span id="start-time">{{ start_time }}</span></p>
-        <p><strong>Sampai:</strong> <span id="end-time">{{ end_time }}</span></p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-5">
-        <h2 class="font-semibold text-lg text-green-600 mb-2">📈 Nilai Tertinggi</h2>
-        <p><strong>Nilai:</strong> <span id="max-value">{{ max_value }}</span></p>
-        <p><strong>Waktu:</strong> <span id="max-time">{{ max_time }}</span></p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-5">
-        <h2 class="font-semibold text-lg text-green-600 mb-2">📊 Regresi Linear</h2>
-        <p><strong>Persamaan:</strong> <code class="bg-gray-100 p-1 rounded text-sm" id="equation">{{ equation }}</code></p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-5">
-        <h2 class="font-semibold text-lg text-green-600 mb-2">📅 Prediksi</h2>
-        <p><strong>Sekarang:</strong> <span id="last-pred">{{ last_pred }}</span></p>
-        <p><strong>24 Jam Lagi:</strong> <span id="future-pred">{{ future_pred }}</span></p>
-      </div>
-    </section>
+  <nav class="bg-white/80 backdrop-blur-md shadow-md fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-pink-600">Analisis Kata Gaul</a>
 
-    <section class="mb-10">
-      <h2 class="text-xl font-semibold text-center mb-4 text-green-700">📉 Grafik Popularitas</h2>
-      <div class="overflow-hidden rounded-xl shadow">
-        <img src="/static/images/analisis_hari_bumi_simple.png" alt="Grafik Popularitas Hari Bumi" class="w-full h-auto">
-      </div>
-    </section>
+      <button id="hamburger" class="md:hidden text-gray-700 hover:text-pink-600 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
 
-    <section class="bg-white p-6 rounded-xl shadow mb-10">
-      <h2 class="text-lg font-semibold text-green-600 mb-4">🔮 Prediksi Popularitas Berdasarkan Input</h2>
-      <form action="/analisis/" method="POST" class="space-y-4">
+      <div class="hidden md:flex space-x-6">
+        <a href="#hero" class="text-gray-700 hover:text-pink-600 transition">Home</a>
+        <a href="#analisis" class="text-gray-700 hover:text-pink-600 transition">Analisis</a>
+        <a href="#tim" class="text-gray-700 hover:text-pink-600 transition">Tim</a>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white/90 backdrop-blur-md shadow-md">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+        <a href="#hero" class="text-gray-700 hover:text-pink-600 transition py-2">Home</a>
+        <a href="#analisis" class="text-gray-700 hover:text-pink-600 transition py-2">Analisis</a>
+        <a href="#tim" class="text-gray-700 hover:text-pink-600 transition py-2">Tim</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 animate-fade-in relative overflow-hidden pt-20" id="hero">
+    <div class="text-6xl md:text-7xl mb-4 animate-bounce-slow">🗣️✨</div>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-pink-600 mb-2 drop-shadow">Analisis Popularitas Kata Gaul Anak Muda</h1>
+    <div class="text-pink-400 text-base md:text-lg font-semibold mb-2 tracking-wide uppercase">Pantau tren bahasa kekinian!</div>
+    <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-6">Pantau dan prediksi tren kata-kata gaul yang lagi hype di kalangan anak muda Indonesia, lengkap dengan grafik dan analisis numerik kekinian!</p>
+    <button onclick="document.getElementById('analisis').scrollIntoView({behavior: 'smooth'})" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition text-lg flex items-center gap-2 mx-auto transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-200">
+      <span>Mulai Analisis</span> <span>🚀</span>
+    </button>
+  </section>
+
+  <div class="flex justify-center my-2">
+    <div class="h-1 w-24 bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 rounded-full"></div>
+  </div>
+
+  <section id="pengertian" class="w-full flex justify-center py-10 px-4 animate-fade-in-up">
+    <div class="glass-card max-w-2xl p-6 md:p-8 text-center relative">
+      <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-5xl">❓</div>
+      <h2 class="text-2xl font-bold text-blue-700 mb-3 flex items-center justify-center gap-2 mt-6"><span> Apa Itu Analisis Popularitas Kata Gaul?</span></h2>
+      <p class="text-gray-700 text-lg leading-relaxed">Analisis popularitas kata gaul adalah proses memantau dan memprediksi seberapa sering kata-kata gaul digunakan oleh anak muda dari waktu ke waktu. Dengan data ini, kita bisa tahu tren bahasa yang sedang naik daun, serta memprediksi apakah kata tersebut akan tetap populer atau mulai redup. Proyek ini menggabungkan data Google Trends dengan metode numerik untuk hasil yang fun dan informatif!</p>
+    </div>
+  </section>
+
+  <div class="flex justify-center my-2">
+    <div class="h-1 w-24 bg-gradient-to-r from-yellow-400 via-blue-400 to-pink-400 rounded-full"></div>
+  </div>
+
+  <main class="flex-1 flex flex-col items-center justify-center px-4" id="analisis">
+    <section class="glass-card w-full max-w-2xl mb-12 mt-[-40px] border border-pink-200 animate-fade-in-up relative overflow-visible p-0">
+      <!-- Judul Section -->
+      <div class="flex items-center gap-2 px-8 pt-8 pb-2 border-b border-blue-100">
+        <span class="text-2xl">📊</span>
+        <h2 class="text-2xl font-bold text-blue-700 flex-1">Analisis Kata Gaul</h2>
+      </div>
+      <form action="/analisis/" method="POST">
         {% csrf_token %}
-        <div>
-          <label for="datetime" class="block mb-1 font-medium">Masukkan Tanggal & Waktu:</label>
-          <input
-            type="text"
-            id="datetime"
-            name="datetime"
-            placeholder="Contoh: 2025-04-22 14:00"
-            class="w-full px-4 py-2 border rounded-md"
-            required
-          >
+        <div class="flex flex-col md:flex-row items-center gap-4 px-8 py-4 border-b border-blue-50">
+          <label for="kataGaul" class="block text-lg font-semibold mb-0 flex-shrink-0 flex items-center gap-2"><span class="text-xl">📝</span>Pilih Kata Gaul:</label>
+          <select id="words" class="w-full md:w-1/2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-pink-400 transition hover:shadow-md hover:border-pink-400 bg-white" name="words">
+            <option value="anjay">anjay</option>
+            <option value="gaskeun">gaskeun</option>
+            <option value="mager">mager</option>
+            <option value="santuy">santuy</option>
+          </select>
+          <label for="datetime" class="block text-lg font-semibold mb-0 flex-shrink-0 flex items-center gap-2"><span class="text-xl">📅</span>Tanggal:</label>
+          <input type="datetime-local" id="datetime" name="datetime" class="w-full md:w-1/3 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition bg-white" value="{{ selected_date }}" />
         </div>
-        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md">Prediksi</button>
+
+        <div class="px-8 py-4 flex justify-end gap-4 hidden">
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-md transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+            🔮 Prediksi
+          </button>
+        </div>
       </form>
 
-      {% if error %}
-      <p class="mt-4 text-red-500">{{ error }}</p>
+      <div class="px-8 py-6 border-b border-blue-50">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xl">📈</span>
+          <h3 class="text-lg font-semibold">Grafik Popularitas</h3>
+        </div>
+        <div class="bg-white rounded-xl shadow flex justify-center items-center py-4 px-2 border border-blue-100">
+          {% if prediction_score%}
+          <img src="/static/images/analisis_hari_bumi_simple.png" alt="Grafik Popularitas Hari Bumi" alt="Grafik Popularitas" class="rounded shadow border border-blue-200 transition transform hover:scale-105" id="chartPlaceholder">
+          {% else %}
+          <img src="/static/images/empty_graph.png" alt="empty graph" class="rounded shadow border border-blue-200 transition transform hover:scale-105" id="chartPlaceholder">
+          {% endif %}
+        </div>
+        <div class="text-xs text-gray-400 mt-2">Sumbu X: Tanggal ke-, Sumbu Y: Skor Popularitas (0-100)</div>
+      </div>
+
+      {% if prediction_score %}
+      <div class="px-8 py-6">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xl">🔮</span>
+          <h3 class="text-lg font-semibold">Hasil Prediksi</h3>
+        </div>
+        <div class="bg-blue-100 text-blue-800 rounded-2xl p-6 text-center text-2xl font-extrabold shadow-md border border-blue-200 transition transform hover:scale-105 flex flex-col items-center gap-2">
+          <span id="prediksiOutput">Prediksi popularitas keyword <b>"Hari Bumi"</b> pada <b>{{ locale_time }}</b> diperkirakan sebesar <span id="prediksiValue">{{ prediction_score }}</span></span>
+        </div>
+      </div>
       {% endif %}
     </section>
+  </main>
+
+  <div class="flex justify-center my-2">
+    <div class="h-1 w-24 bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 rounded-full"></div>
   </div>
+
+  <section class="w-full flex justify-center py-10 px-4 animate-fade-in-up" id="tim">
+    <div class="glass-card max-w-4xl p-6 md:p-8 text-center">
+      <h2 class="text-2xl font-bold text-blue-700 mb-6 flex items-center justify-center gap-2"><span class="text-2xl">👥</span> Profile Tim</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="bg-white rounded-xl shadow-md p-4 border border-blue-100 transition transform hover:scale-105">
+          <img src="/static/images/bunga.jpg" alt="Bunga" class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-pink-200">
+          <h3 class="font-bold text-lg text-gray-800">Bunga Nur Munawaroh</h3>
+          <p class="text-gray-600">237006110</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-4 border border-blue-100 transition transform hover:scale-105">
+          <img src="/static/images/raihan.jpg" alt="Raihan" class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-pink-200">
+          <h3 class="font-bold text-lg text-gray-800">Mohamad Raihan Ardiansyah</h3>
+          <p class="text-gray-600">2237006113</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-4 border border-blue-100 transition transform hover:scale-105">
+          <img src="/static/images/luthfi.jpg" alt="Luthfi" class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-pink-200">
+          <h3 class="font-bold text-lg text-gray-800">Luthfi Putra Pratama</h3>
+          <p class="text-gray-600">237006119</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md p-4 border border-blue-100 transition transform hover:scale-105">
+          <img src="/static/images/iqbal.jpg" alt="Iqbal" class="w-24 h-24 object-cover rounded-full mx-auto mb-3 border-2 border-pink-200">
+          <h3 class="font-bold text-lg text-gray-800">Iqbal Muttaqin</h3>
+          <p class="text-gray-600">237006120</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center my-2">
+    <div class="h-1 w-24 bg-gradient-to-r from-pink-400 via-blue-400 to-yellow-400 rounded-full"></div>
+  </div>
+
+  <footer class="text-center py-6 text-gray-600 text-sm bg-gradient-to-r from-pink-100 via-blue-100 to-yellow-100 border-t border-pink-200 mt-auto animate-fade-in-up">
+    <div class="mb-1">Data diambil dari <span class="font-semibold">Google Trends</span> </div>
+    <div>Analisis menggunakan metode <span class="font-semibold">Regresi Linier</span> & <span class="font-semibold">Interpolasi Newton</span> </div>
+    <div class="mt-2 text-xs text-gray-400">&copy; 2024 Analisis Kata Gaul. All rights reserved.</div>
+  </footer>
+  <script src="/static/js/script.js"></script>
+  <script>
+  {% if scroll_to_graph %}
+  window.onload = function() {
+    const graph = document.getElementById('analisis');
+    if(graph) {
+      graph.scrollIntoView({ behavior: 'smooth'});
+    } 
+  }
+  {% endif %}
+  </script>
 </body>
 </html>
