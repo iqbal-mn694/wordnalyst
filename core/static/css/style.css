@@ -1,0 +1,83 @@
+#chartPlaceholder {
+  background: repeating-linear-gradient(135deg, #f9fafb, #f9fafb 10px, #e0e7ef 10px, #e0e7ef 20px);
+}
+#prediksiBox {
+  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.08);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-bounce-slow {
+  animation: bounceSlow 2.5s infinite;
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+  backdrop-filter: blur(8px);
+  border-radius: 1.25rem;
+  border: 1.5px solid rgba(200,200,255,0.18);
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100%); opacity: 0; }
+}
+
+#mobile-menu {
+  transition: all 0.3s ease-in-out;
+}
+
+#mobile-menu:not(.hidden) {
+  animation: slideDown 0.3s ease-in-out;
+}
+
+#mobile-menu.hidden {
+  animation: slideUp 0.3s ease-in-out;
+}
+
+#hamburger {
+  transition: transform 0.3s ease;
+}
+
+#hamburger.active {
+  transform: rotate(90deg);
+}
+
+#mobile-menu a {
+  transition: all 0.2s ease;
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+#mobile-menu:not(.hidden) a {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+#mobile-menu a:nth-child(2) { transition-delay: 0.2s; }
+#mobile-menu a:nth-child(3) { transition-delay: 0.3s; }
